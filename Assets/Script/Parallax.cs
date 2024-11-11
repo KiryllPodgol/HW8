@@ -1,19 +1,23 @@
 using UnityEngine;
 
-public class ParallaxEffectLoop : MonoBehaviour
+public class ParallaxLayer : MonoBehaviour
 {
+    public float length, startpos;
     public GameObject cam;
-    float startPosX;
-    public float Parallax;
+    public float parallaxEffect;
 
     private void Start()
     {
-        startPosX = transform.position.x;
+        startpos = transform.position.x;
+        length = GetComponent<MeshRenderer>().bounds.size.x;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        float distX = (cam.transform.position.x * (1 - Parallax));
-        transform.position = new Vector3(startPosX + distX, transform.position.y, transform.position.z);
+        float temp = (cam.transform.position.x * (1 - parallaxEffect));
+        float dist = (cam.transform.position.x * parallaxEffect);
+        transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
+        if (temp > startpos + length) startpos += length;
+        else if (temp < startpos - length) startpos -= length;
     }
 }
