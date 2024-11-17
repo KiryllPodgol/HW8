@@ -3,6 +3,7 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    private bool isFlipped = false; // Флаг для отслеживания текущего состояния поворота
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -13,14 +14,10 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            spriteRenderer.flipX = true; // Поворачиваем персонажа влево
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            spriteRenderer.flipX = false; // Поворачиваем персонажа вправо
+            isFlipped = !isFlipped; // Переключаем состояние флага
+            spriteRenderer.flipX = isFlipped; // Поворачиваем персонажа в зависимости от состояния флага
         }
     }
 }
-
